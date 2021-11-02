@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="shortcut icon" href="" type="image/x-icon">
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('users') }}
+        {# {{ encore_entry_link_tags('mainTypescript') }} #}
+            <!-- Ionicons -->
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+            <!-- Google Font: Source Sans Pro -->
+            <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+            <!-- Font awesome -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+            {# {{ encore_entry_script_tags('mainTypescript') }} #}
+        {% endblock %}
+    </head>
+    <body class="hold-transition layout-fixed">
+
+        {% include "users/navbar.html.twig" %}
+        {% block body %}{% endblock %}
+            {# <footer class="main-footer">
+                <strong>Copyright &copy; 2021-2022 <a href="http://adminlte.io">Don Nermed</a>.</strong>
+                All rights reserved.
+                <div class="float-right d-none d-sm-inline-block">
+                </div>
+            </footer> #}
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+
+        {% block javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" 
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/fr.min.js" 
+            integrity="sha512-RAt2+PIRwJiyjWpzvvhKAG2LEdPpQhTgWfbEkFDCo8wC4rFYh5GQzJBVIFDswwaEDEYX16GEE/4fpeDNr7OIZw==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js" integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('users') }}
+            {{ encore_entry_script_tags('owncompilation') }}
+        {% endblock %}
+    </body>
+</html>

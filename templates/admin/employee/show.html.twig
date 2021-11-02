@@ -1,0 +1,94 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Employee
+{% endblock %}
+
+{% block body %}
+	<div
+		class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Detail de l'employee</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="{{path("adminPath.dashboard")}}">Accueil</a>
+							</li>
+							<li class="breadcrumb-item active">Employee</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+		<section class="content">
+			<div class="container">
+				<table class="table">
+					<tbody>
+						<tr>
+						<tr>
+							<th>Nom</th>
+							<td>{{ employee.firstName }}</td>
+						</tr>
+						<tr>
+							<th>Prenom</th>
+							<td>{{ employee.lastName }}</td>
+						</tr>
+						<tr>
+							<th>Date naissance</th>
+							<td>{{ employee.dateNaissance ? employee.dateNaissance|date('Y-m-d') : '' }}</td>
+						</tr>
+						<tr>
+							<th>Adresse</th>
+							<td>{{ employee.adresse }}</td>
+						</tr>
+						<tr>
+							<th>Niveau academique</th>
+							<td>{{ employee.niveauAcademique }}</td>
+						</tr>
+						<tr>
+							<th>Autre experience</th>
+							<td>{{ employee.autreExperience }}</td>
+						</tr>
+						<tr>
+							<th>CreatedAt</th>
+							<td>{{ employee.createdAt ? employee.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+						</tr>
+						{# <tr>
+							<th>CreatedBy</th>
+							<td>{{ employee.createdBy }}</td>
+						</tr>
+						<tr>
+							<th>ModifyAt</th>
+							<td>{{ employee.modifyAt ? employee.modifyAt|date('Y-m-d H:i:s') : '' }}</td>
+						</tr>
+						<tr>
+							<th>ModifyBy</th>
+							<td>{{ employee.modifyBy }}</td>
+						</tr> #}
+					</tbody>
+				</table>
+
+				<a class="btn btn-default" href="{{ path('adminPath.employee_index') }}">
+					<i class="fa fa-arrow-circle-left"></i>
+					Retour a la liste</a>
+
+				<a href="{{ path('adminPath.employee_edit', {'id': employee.id}) }}" class="btn btn-primary btn-xs">
+					<i class="fa fa-pencil"></i>
+					Modifier</a>
+
+				<div class="mt-4">
+					{{ include('admin/employee/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

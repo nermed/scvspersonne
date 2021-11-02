@@ -1,0 +1,22 @@
+.header_home {
+    padding-bottom: 2rem;
+}
+.header_home h1{
+    letter-spacing: 6px;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0;
+    font-size: 3rem;
+    color: #6D6C6C;
+}
+.content-wrapper-user {
+    padding: 2rem 5rem 0 5rem;
+}
+
+.servicesLatest .service .cardFooterList li{
+    display: inline;
+    padding: 0 2rem 0;
+}
+.pLatest a{
+    text-decoration: underline;
+}

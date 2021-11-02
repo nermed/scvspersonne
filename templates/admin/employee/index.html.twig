@@ -1,0 +1,103 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Listes des employees
+{% endblock %}
+
+{% block body %}
+	<div
+		class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Employee</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="{{path("adminPath.dashboard")}}">Accueil</a>
+							</li>
+							<li class="breadcrumb-item active">Employee</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-3 padd-left-0"></div>
+							<div class="col-md-4 padd-left-0">
+								<div class="form-group">
+									<input hidden type="text" class="form-control col-md-9" placeholder="Rechercher">
+								</div>
+							</div>
+							<div class="col-md-1 padd-left-0">
+								<a hidden class="btn btn-flat col-md-1" id="Recherche">
+									<i class="fa fa-refresh"></i>
+								</a>
+							</div>
+							<div class="col-md-4 pull-right-0">
+								<a class="btn btn-flat btn-primary" title="Ajouter un nouveau service" href="{{path("adminPath.employee_new")}}" id="add_employee">
+									<i class="fa fa-plus"></i>
+									Ajouter</a>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="container-fluid mt-4">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped dataTable">
+								<thead>
+									<tr>
+										<th>Nom</th>
+										<th>Prenom</th>
+										<th>Date de naissance</th>
+										<th>Adresse</th>
+										<th>Niveau Academique</th>
+										<th>Autre Experience</th>
+										<th>Date de creation</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for employee in employees %}
+										<tr>
+											<td>{{ employee.firstName }}</td>
+											<td>{{ employee.lastName }}</td>
+											<td>{{ employee.dateNaissance ? employee.dateNaissance|date('Y-m-d') : '' }}</td>
+											<td>{{ employee.adresse }}</td>
+											<td>{{ employee.niveauAcademique }}</td>
+											<td>{{ employee.autreExperience }}</td>
+											<td>{{ employee.createdAt ? employee.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+											<td>
+												<a class="btn btn-info btn-xs" href="{{ path('adminPath.employee_show', {'id': employee.id}) }}" title="Voir">
+													<i class="fa fa-eye"></i>
+												</a>
+												<a class="btn btn-info btn-xs" href="{{ path('adminPath.employee_edit', {'id': employee.id}) }}" title="Modifier">
+													<i class="fa fa-pencil"></i>
+												</a>
+											</td>
+										</tr>
+									{% else %}
+										<tr>
+											<td colspan="12">no records found</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

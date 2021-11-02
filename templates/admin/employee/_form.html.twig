@@ -1,0 +1,101 @@
+{{ form_start(form) }}
+<div class="row col-md-12">
+	<div class="col-md-9 col-lg-9">
+		<div class="row col-md-12">
+			<div class="form-group col-md-5">
+				{{ form_label(form.first_name, 'Nom') }}
+				{{ form_widget(form.first_name, {'attr': {'class': 'first_name form-control', 'placeholder': 'Nom'}}) }}
+			</div>
+			<div class="form-group col-md-5">
+				{{ form_label(form.last_name, 'Prenom') }}
+				{{ form_widget(form.last_name, {'attr': {'class': 'last_name form-control', 'placeholder': 'Prenom'}}) }}
+			</div>
+		</div>
+		<div class="row col-md-12">
+			<div class="form-group col-md-5">
+				{{ form_label(form.date_naissance, 'Date de naissance') }}
+				{{ form_widget(form.date_naissance, {'attr': {'class': 'date_naissance form-control datetimepicker', 'type': 'text'}}) }}
+			</div>
+			<div class="form-group col-md-5">
+				{{ form_label(form.niveau_academique, 'Niveau academique') }}
+				{{ form_widget(form.niveau_academique, {'attr': {'class': 'niveau_academique form-control', 'placeholder': 'Niveau academique'}}) }}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 col-lg-3">
+		<div class="card form_employer_image">
+			 {% if employee.imgPath %}
+                    <img src="/images/employees/{{ employee.imgPath }}" alt="card-img-top" style="width: 100%; height:auto;">
+			{% else %}
+				<img src="{{ '/images/employees/user_avatar.png' }}" alt="card-img-top" style="width: 100%; height: auto;">
+			{% endif %}
+			{{ form_widget(form.imageFile, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
+		</div>
+	</div>
+</div>
+
+<div hidden id="address_form" class="col-lg-8 col-md-8">
+	<div class="card alert-default">
+		<h5 clas="card-header h5" style="padding: 20px;">Adresse</h5>
+		<div class="card-body">
+			<div class="row">
+				<div class="form-group col-md-6">
+					{{ form_label(form.province, 'Province') }}
+					{{ form_widget(form.province, {'attr': {'class': 'province form-control', 'placeholder': 'Province'}}) }}
+				</div>
+				<div class="form-group col-md-6">
+					{{ form_label(form.commune, 'Commune') }}
+					{{ form_widget(form.commune, {'attr': {'class': 'commune form-control', 'placeholder': 'Commune'}}) }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					{{ form_label(form.quartier, 'Quartier') }}
+					{{ form_widget(form.quartier, {'attr': {'class': 'quartier form-control', 'placeholder': 'Quartier'}}) }}
+				</div>
+				<div class="form-group col-md-6">
+					{{ form_label(form.rue, 'Rue') }}
+					{{ form_widget(form.rue, {'attr': {'class': 'rue form-control', 'placeholder': 'Rue'}}) }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					{{ form_label(form.telephone, 'Telephone') }}
+					{{ form_widget(form.telephone, {'attr': {'class': 'telephone form-control', 'placeholder': 'Telephone'}}) }}
+				</div>
+				<div class="form-group col-md-6">
+					{{ form_label(form.email, 'Email') }}
+					{{ form_widget(form.email, {'attr': {'class': 'commune form-control', 'placeholder': 'Email'}}) }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div hidden id="other_potential_form" class="col-lg-8 col-md-8">
+	<div class="card alert-default">
+		<h5 clas="card-header h5" style="padding: 20px;">Autre experience</h5>
+		<div class="card-body">
+			<div class="row">
+				<div class="form-group col-md-6">
+					{{ form_widget(form.autreExperiences, {'attr': {'class': 'experience form-select chosen chosen-select'}}) }}
+				</div>
+			</div>
+			</div>
+			<div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-2">
+		<a class="btn btn-default" href="{{ path('adminPath.employee_index') }}">
+			<i class="fa fa-arrow-circle-left"></i>
+			Retour a la liste</a>
+	</div>
+	<div class="col-md-2" id="suivant_element" >
+		<a class="btn btn-info" id="suivant_button" type="button">Suivant</a>
+	</div>
+	<div class="col-md-2" id="submit_element" hidden>
+		<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+	</div>
+</div>
+{{ form_end(form) }}

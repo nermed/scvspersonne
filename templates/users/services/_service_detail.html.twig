@@ -1,0 +1,20 @@
+<div class="col-md-6">
+	<div class="card service">
+		<div class="card-header">
+			<h4 class="text-bold">{{ service.name }}</h4>
+		</div>
+		<div class="card-body">
+			<ul class="cardFooterList">
+				<li>Prix initial:
+					{{ service.priceInitial }}</li>
+				<li>Prix Special:
+					{{ service.priceSpecial}}</li>
+				<li>Duree:
+					{{ service.duree }}</li>
+			</ul>
+		</div>
+		<div class="card-footer text-muted">
+			{{service.description}}
+		</div>
+	</div>
+</div>

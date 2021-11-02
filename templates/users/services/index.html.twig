@@ -1,0 +1,22 @@
+{% extends "users/base.html.twig" %}
+
+{% block title %}Acceuil | SCVS Personne
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="content-wrapper-user">
+			<service-list></service-list>
+			{# <ul class="servicesLatest">
+				<div class="row">
+					{% for service in servicesList %}
+						{% include "users/services/_service_detail.html.twig" %}
+					{% endfor %}
+				</div>
+			</ul>
+			<div class="col-md-6 pull-left">
+				{{ knp_pagination_render(servicesList) }}
+			</div> #}
+		</div>
+	</div>
+{% endblock %}

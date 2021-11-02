@@ -1,0 +1,86 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Listes des commandes
+{% endblock %}
+
+{% block body %}
+	<div
+		class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Commandes</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="{{path("adminPath.dashboard")}}">Acceuil</a>
+							</li>
+							<li class="breadcrumb-item active">Commandes</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-3 padd-left-0"></div>
+							<div class="col-md-4 padd-left-0">
+								<div class="form-group">
+									<input hidden type="text" class="form-control col-md-9" placeholder="Rechercher">
+								</div>
+							</div>
+							<div class="col-md-1 padd-left-0">
+								<a hidden class="btn btn-flat col-md-1" id="Recherche">
+									<i class="fa fa-refresh"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="container-fluid mt-4">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped dataTable">
+								<thead>
+									<tr>
+										<th>Code commande</th>
+										<th>Date de Creation</th>
+										<th>Duree</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for commande in commandes %}
+										<tr>
+											<td>{{ commande.codeCommande }}</td>
+											<td>{{ commande.comCreatedAt ? commande.comCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+											<td>{{ commande.duree }}</td>
+											<td>
+												<a href="{{ path('adminPath.commandes_show', {'id': commande.id}) }}">show</a>
+												<a href="{{ path('adminPath.commandes_edit', {'id': commande.id}) }}">edit</a>
+											</td>
+										</tr>
+									{% else %}
+										<tr>
+											<td colspan="5">no records found</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

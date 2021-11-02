@@ -1,0 +1,104 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Services
+{% endblock %}
+
+{% block body %}
+	<div
+		class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">Services</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item">
+								<a href="{{path("adminPath.dashboard")}}">Home</a>
+							</li>
+							<li class="breadcrumb-item active">Services</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-3 padd-left-0"></div>
+							<div class="col-md-4 padd-left-0">
+								<div class="form-group">
+									<input hidden type="text" class="form-control col-md-9" placeholder="Rechercher">
+								</div>
+							</div>
+							<div class="col-md-1 padd-left-0">
+								<a hidden class="btn btn-flat col-md-1" id="Recherche">
+									<i class="fa fa-refresh"></i>
+								</a>
+							</div>
+							<div class="col-md-4 pull-right-0">
+								<a class="btn btn-flat btn-primary" title="Ajouter un nouveau service" href="{{path("adminPath.services_new")}}" id="add_services">
+									<i class="fa fa-plus"></i>
+									Ajouter</a>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="container-fluid mt-4">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped dataTable">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Prix initial</th>
+										<th>Prix special</th>
+										<th>Date de creation</th>
+										{# <th>Cree par</th> #}
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for service in services %}
+										<tr>
+											<td>{{ service.name }}</td>
+											<td>{{ service.description }}</td>
+											<td>{{ service.priceInitial }}</td>
+											<td>{{ service.priceSpecial }}</td>
+											<td>{{ service.createdAt ? service.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+											{# <td>{{ service.createdBy }}</td> #}
+											<td>
+												<a class="btn btn-info btn-xs" href="{{ path('adminPath.services_show', {'id': service.id}) }}" title="Voir">
+													<i class="fa fa-eye"></i>
+												</a>
+												<a class="btn btn-default btn-xs" title="Modifier" href="{{ path('adminPath.services_edit', {'id': service.id}) }}">
+													<i class="fa fa-pencil"></i>
+												</a>
+												<a class="btn btn-danger btn-xs" title="Supprimer" href="{{ path('adminPath.services_delete', {'id': service.id}) }}">
+													<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}"><i class="fa fa-trash"></i>
+												</a>
+											</td>
+										</tr>
+									{% else %}
+										<tr>
+											<td colspan="12">no records found</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+{% endblock %}

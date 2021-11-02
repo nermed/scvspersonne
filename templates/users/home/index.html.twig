@@ -1,0 +1,39 @@
+{% extends "users/base.html.twig" %}
+
+{% block title %}Acceuil | SCVS Personne
+{% endblock %}
+
+{% block body %}
+	{{ include('users/home/_header.html.twig') }}
+	<div class="container">
+		<div class="content-wrapper-user">
+			<ul class="servicesLatest">
+                <div class="row">
+                    {% for service in servicesLatest %}
+                        <div class="col-md-6">
+                            <div class="card service">
+                                <div class="card-header">
+                                    <h4 class="text-bold">{{ service.name }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="cardFooterList">
+                                        <li>Prix initial:
+                                            {{ service.priceInitial }}</li>
+                                        <li>Prix Special:
+                                            {{ service.priceSpecial}}</li>
+                                        <li>Duree:
+                                            {{ service.duree }}</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    {{service.description}}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+			</ul>
+            <p class="text-center pLatest"><a href="{{path('services')}}"> Tous les articles ...</a></p>
+		</div>
+	</div>
+{% endblock %}
