@@ -1,0 +1,160 @@
+{% extends 'users/base.html.twig' %}
+
+{% block title %}
+  Commande Detail | SCVS Personne
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="">
+      <div class="container mt-4 row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{ commande.codeCommande }}</h4>
+              <div class="col-md-12 mt-4 card-body">
+                {% if paie %}
+                  <p class="alert alert-warning">En attente du confirmation</p>
+                {% else %}
+                  <p class="alert alert-danger">Pas encore paye</p>
+                {% endif %}
+                {% if employeeTaken is empty %}
+                  
+                {% else %}
+                  {% for employee in employeeTaken %}
+                    <div class="card">
+                      <div class="row">
+                        <div class="col-md-4">
+                          {% if employee.img_path %}
+                            <img src="/images/employees/{{ employee.img_path }}"
+                              alt="card-img-top"
+                              style="width: 100%; padding: 1rem; height:auto;" />
+                          {% else %}
+                            <img src="/images/employees/user_avatar.png"
+                              alt="card-img-top"
+                              style="width: 100%; height: auto;" />
+                          {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h4 class="card-title">
+                              {{ employee.first_name }} {{ employee.last_name }}
+                            </h4>
+                            <p class="card-text">
+                              Niveau d'etude: {{ employee.niveau_academique }}<br />
+                              Age: {{ employee.date_naissance }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive col-md-8">
+          <table class="table table-bordered table-striped dataTable">
+            <thead>
+              <tr>
+                <th>
+                  Service
+                </th>
+                <th>
+                  Duree
+                </th>
+                <th>
+                  Prix
+                </th>
+                <th>
+                  Valide
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for commande_details in commande_detailss %}
+                <tr>
+                  <td>
+                    {{ commande_details.name|nl2br }}
+                  </td>
+                  <td>
+                    {{ commande_details.hours }}
+                  </td>
+                  <td>
+                    {{ commande_details.price }}
+                  </td>
+                  <td>
+                    {% set during =  commande_details.validite %}
+                    {% set firstEl =  "+" %}
+                    {% set secondEl =  " day" %}
+                    {{ commande_details.created_at|date_modify(firstEl ~ during|format_number ~ secondEl)|date("d/m/Y") }}
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5" class="text-center">
+                    no records found
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="container mb-4">
+        <div class="row" style="max-height: 5rem;">
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-header">
+                Paiment
+              </div>
+              
+                {% if paie %}
+                  <div class="card-body">
+                    <h2 class="text-center">Deja paye</h2>
+                {% else %}
+                  <div class="card-body">
+                    <paiment-form data-commid={{commande.id}} data-user={{app.user ? app.user.id : 0}}></paiment-form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="max-height: 25rem;">
+            <div class="card h-100">
+              <div class="card-header">
+                Choisir la date de mis en service
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="date_service">Date</label>
+                  <input type="date"
+                    class="form-control" name="date_service" id="date_service" aria-describedby="help" placeholder="">
+                  <small id="help" class="form-text text-muted">Si vous faites avancer la date, les prix augmenteront</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" style="max-height: 25rem;">
+            <div class="card h-100">
+              <div class="card-header">
+                Choisir la servante ou serveur
+              </div>
+              <div class="card-body" style="overflow: scroll;">
+                {% for employee in employee_free %}
+                  {% include "users/commande_detail/list_employee.html.twig" %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# <a href="{{ path('commande_detail_index') }}">back to list</a>
+
+    <a href="{{ path('commande_detail_edit', {'id': commande_detail.id}) }}">edit</a> #}
+
+  {# {{ include('commande_detail/_delete_form.html.twig') }} #}
+{% endblock %}

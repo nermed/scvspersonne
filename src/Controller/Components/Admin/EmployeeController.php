@@ -32,9 +32,13 @@ class EmployeeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $employee->getImageFile();
-            $fileName = $fileUploader->upload($file);
-            $employee->setImgPath($fileName);
+            if(!empty($employee->getImageFile())) {
+                $file = $employee->getImageFile();
+                $fileName = $fileUploader->upload($file);
+                $employee->setImgPath($fileName);
+            }else{
+                
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($employee);
             $entityManager->flush();

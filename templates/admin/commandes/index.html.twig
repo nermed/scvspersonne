@@ -54,8 +54,6 @@
 								<thead>
 									<tr>
 										<th>Code commande</th>
-										<th>Date de Creation</th>
-										<th>Duree</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -63,8 +61,6 @@
 									{% for commande in commandes %}
 										<tr>
 											<td>{{ commande.codeCommande }}</td>
-											<td>{{ commande.comCreatedAt ? commande.comCreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-											<td>{{ commande.duree }}</td>
 											<td>
 												<a href="{{ path('adminPath.commandes_show', {'id': commande.id}) }}">show</a>
 												<a href="{{ path('adminPath.commandes_edit', {'id': commande.id}) }}">edit</a>

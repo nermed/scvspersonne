@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="row">
+    <div class="col-md-4">
+      {% if employee.img_path %}
+        <img src="/images/employees/{{ employee.img_path }}"
+          alt="card-img-top"
+          style="width: 100%; padding: 1rem; height:auto;" />
+      {% else %}
+        <img src="/images/employees/user_avatar.png"
+          alt="card-img-top"
+          style="width: 100%; height: auto;" />
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">
+          {{ employee.first_name }} {{ employee.last_name }}
+        </h4>
+        <p class="card-text">
+          Niveau d'etude: {{ employee.niveau_academique }}<br />
+          Age: {{ employee.date_naissance }}
+        </p>
+      </div>
+    </div>
+  </div>
+  {% include "users/commande_detail/add_employee.html.twig" %}
+</div>

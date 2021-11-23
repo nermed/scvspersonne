@@ -5,8 +5,9 @@ import { ServicesList } from './ServicesList'
 
 export class ServiceListElement extends HTMLElement {
   connectedCallback() {
+    const userClient = parseInt(this.dataset.user, 10) || null
     render(
-        <ServicesList />
+        <ServicesList userClient={userClient} />
     , this);
   }
 }

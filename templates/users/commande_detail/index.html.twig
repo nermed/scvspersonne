@@ -1,0 +1,36 @@
+{% extends "users/base.html.twig" %}
+
+{% block title %}Commandes | SCVS Personne
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped dataTable">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Date de creation</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for commande_detail in commande_details %}
+                    <tr>
+                        <td>{{ commande_detail.code_commande }}</td>
+                        <td>{{ commande_detail.com_created_at ? commande_detail.com_created_at|date('d-m-Y H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('commande_detail_show', {'id': commande_detail.idC}) }}">show</a>
+                            <a href="{{ path('commande_detail_edit', {'id': commande_detail.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -22,7 +22,8 @@ class ServicesFixtures extends Fixture
                 ->setDuree($faker->numberBetween(1, 8))
                 ->setCreatedBy($faker->numberBetween(1,5))
                 ->setCodeService($faker->numberBetween(1, 300))
-                ->setQuantityMax($faker->numberBetween(1,5));
+                ->setQuantityMax($faker->numberBetween(1,5))
+                ->setValidite($faker->numberBetween(1, 5));
                 // ->addCommande($faker->randomElement(1,2));
 
 

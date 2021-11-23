@@ -47,31 +47,56 @@ class CommandesRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function connectBase() {
+        return $this->getEntityManager()->getConnection();
+    }
+
     public function random_code($length = 10){
 
     	$randomString = '';
     	$dateyear = date('Y');
         $suffix='CM';
 
-        $conn = $this->getEntityManager()->getConnection();
+        $conn = $this->connectBase();
 
         $sql = "SELECT LPAD(MAX(Maxcount)+1,6,0) as Maxcounts from (SELECT MAX(CAST(REPLACE(code_commande,'".$suffix."','') AS UNSIGNED)) as Maxcount from commandes cm WHERE YEAR(cm.com_created_at)='".$dateyear."')t";
 
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll();
+        $stmt = $conn->executeQuery($sql);
+        $data = $stmt->fetchAllAssociative();
             
              foreach ($data as $key => $value) {
                 
-                if($value->Maxcounts==NULL){
+                if($value['Maxcounts']==NULL){
                     $Countmax="000001";
                 }else{
-                    $Countmax=$value->Maxcounts;
+                    $Countmax=$value['Maxcounts'];
                 }
              }
 
         $randomString = $suffix.''.$Countmax;
 
         return $randomString;
+    }
+
+    public function select_last()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+    public function collectDetail($idC) {
+        $connect = $this->connectBase();
+
+        $query =    "SELECT * FROM commande_detail CD 
+                    LEFT JOIN services as SV ON SV.id = CD.services_id
+                    WHERE CD.commandes_id = ".$idC."
+                    ";
+
+        $stmt = $connect->executeQuery($query);
+        $data = $stmt->fetchAllAssociative();
+
+        return $data;
     }
 }

@@ -14,9 +14,20 @@
         <li class="nav-item">
             <a class="nav-link" href="#" role="button">Contactez-nous</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" role="button">Se connecter</a>
-        </li>
+        {% if app.user %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('app_logout')}}" role="button">Se deconnecter</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('app_login')}}" role="button">Se connecter</a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('adminPath.dashboard')}}" role="button">Administrateur</a>
+            </li>
+        {% endif %}
     </ul>
     <!-- Right navbar links -->
 </nav>

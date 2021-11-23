@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Components\Api\CommandesController;
 use App\Repository\CommandesRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,9 +14,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=CommandesRepository::class)
  */
-#[ApiResource(  forceEager: false,
-                collectionOperations: ['get', 'post' => [
-                    'denormalization_context' => ['groups'=> ['post:Commande']]
+#[ApiResource(  
+                collectionOperations: ['get',
+                'post' => [
+                    // 'security' => "is_granted('IS_AUTHENTICATED_FULLY')",
+                    'denormalization_context' => ['groups'=> ['post:Commande']],
+                    'controller' => CommandesController::class
                 ]
                     ],
                 itemOperations: ['get' =>  [
@@ -32,37 +36,37 @@ class Commandes
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['read:collection'])]
+    // #[Groups(['read:collection', 'read:detail'])]
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection', 'read:Pdetail', 'read:detail', 'read:Pcollection'])]
     private $code_commande;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Services::class, inversedBy="commandes")
-     */
-    #[Groups(['read:detail','post:Commande', 'put:Commande'])]
-    private $services;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    #[Groups(['read:collection'])]
+    #[Groups(['read:collection', 'read:detail'])]
     private $com_createdAt;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity=UserClient::class, inversedBy="commandes")
      */
-    #[Groups(['read:collection','post:Commande', 'put:Commande'])]
-    private $duree;
+    #[Groups(['read:collection','post:Commande'])]
+    private $author;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeDetail::class, mappedBy="commandes")
+     */
+    #[Groups(['read:collection'])]
+    private $commandeDetails;
+
 
     public function __construct()
     {
         $this->com_createdAt = new DateTimeImmutable();
-        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,30 +86,6 @@ class Commandes
         return $this;
     }
 
-    /**
-     * @return Collection|Services[]
-     */
-    public function getServices(): Collection
-    {
-        return $this->services;
-    }
-
-    public function addService(Services $service): self
-    {
-        if (!$this->services->contains($service)) {
-            $this->services[] = $service;
-        }
-
-        return $this;
-    }
-
-    public function removeService(Services $service): self
-    {
-        $this->services->removeElement($service);
-
-        return $this;
-    }
-
     public function getComCreatedAt(): ?\DateTimeImmutable
     {
         return $this->com_createdAt;
@@ -118,16 +98,47 @@ class Commandes
         return $this;
     }
 
-    public function getDuree(): ?int
+    public function getAuthor(): ?UserClient
     {
-        return $this->duree;
+        return $this->author;
     }
 
-    public function setDuree(?int $duree): self
+    public function setAuthor(?UserClient $author): self
     {
-        $this->duree = $duree;
+        $this->author = $author;
 
         return $this;
     }
+
+    /**
+     * @return Collection|CommandeDetail[]
+     */
+    public function getCommandeDetails(): Collection
+    {
+        return $this->commandeDetails;
+    }
+
+    public function addCommandeDetail(CommandeDetail $commandeDetail): self
+    {
+        if (!$this->commandeDetails->contains($commandeDetail)) {
+            $this->commandeDetails[] = $commandeDetail;
+            $commandeDetail->setCommandes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeDetail(CommandeDetail $commandeDetail): self
+    {
+        if ($this->commandeDetails->removeElement($commandeDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeDetail->getCommandes() === $this) {
+                $commandeDetail->setCommandes(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }

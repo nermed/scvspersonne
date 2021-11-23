@@ -1,12 +1,12 @@
 {% extends "users/base.html.twig" %}
 
-{% block title %}Acceuil | SCVS Personne
+{% block title %}Services | SCVS Personne
 {% endblock %}
 
 {% block body %}
 	<div class="container">
 		<div class="content-wrapper-user">
-			<service-list></service-list>
+			<service-list data-user={{app.user ? app.user.id : 0}}></service-list>
 			{# <ul class="servicesLatest">
 				<div class="row">
 					{% for service in servicesList %}

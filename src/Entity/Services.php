@@ -28,7 +28,7 @@ class Services
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['read:collectionService', 'read:detail'])]
+    #[Groups(['read:collectionService'])]
     private $id;
 
     /**
@@ -104,9 +104,16 @@ class Services
     private $duree;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Commandes::class, mappedBy="services")
+     * @ORM\OneToMany(targetEntity=CommandeDetail::class, mappedBy="services")
      */
-    private $commandes;
+    #[Groups(['read:collectionService'])]
+    private $commandeServices;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    #[Groups(['read:collectionService'])]
+    private $validite;
 
     public function __construct()
     {
@@ -114,6 +121,7 @@ class Services
         $this->created_by = 1;
         $this->code_service = '214';
         $this->commandes = new ArrayCollection();
+        $this->commandeServices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -278,28 +286,43 @@ class Services
     }
 
     /**
-     * @return Collection|Commandes[]
+     * @return Collection|CommandeDetail[]
      */
-    public function getCommandes(): Collection
+    public function getCommandeServices(): Collection
     {
-        return $this->commandes;
+        return $this->commandeServices;
     }
 
-    public function addCommande(Commandes $commande): self
+    public function addCommandeService(CommandeDetail $commandeService): self
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes[] = $commande;
-            $commande->addService($this);
+        if (!$this->commandeServices->contains($commandeService)) {
+            $this->commandeServices[] = $commandeService;
+            $commandeService->setServices($this);
         }
 
         return $this;
     }
 
-    public function removeCommande(Commandes $commande): self
+    public function removeCommandeService(CommandeDetail $commandeService): self
     {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removeService($this);
+        if ($this->commandeServices->removeElement($commandeService)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeService->getServices() === $this) {
+                $commandeService->setServices(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getValidite(): ?int
+    {
+        return $this->validite;
+    }
+
+    public function setValidite(?int $validite): self
+    {
+        $this->validite = $validite;
 
         return $this;
     }

@@ -1,0 +1,70 @@
+{% extends 'users/base.html.twig' %}
+
+{% block title %}
+  S'inscrire
+{% endblock %}
+
+{% block body %}
+  <div class="container w-75 mt-4">
+    <div class="card">
+      <div class="card-header">
+        S'inscrire
+      </div>
+      <div class="card-body alert alert-secondary">
+        {{ form_start(registrationForm) }}
+        <div class="row col-md-12">
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.name, 'Nom') }}
+                {{ form_widget(registrationForm.name, {'attr': {'class': 'name form-control', 'placeholder': 'Nom'}}) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.username, 'Prenom') }}
+                {{ form_widget(registrationForm.username, {'attr': {'class': 'prenom form-control', 'placeholder': 'Prenom'}}) }}
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.sexe, 'Sexe') }}
+                {{ form_widget(registrationForm.sexe, {'attr': {'class': 'province form-control', 'placeholder': 'Sexe'}}) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.telephone, 'Telephone') }}
+                {{ form_widget(registrationForm.telephone, {'attr': {'class': 'telephone form-control', 'placeholder': 'Telephone'}}) }}
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.email, 'Email') }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'email form-control', 'placeholder': 'email'}}) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.province, 'Province') }}
+                {{ form_widget(registrationForm.province, {'attr': {'class': 'province form-control', 'placeholder': 'Province'}}) }}
+            </div>
+        </div>
+        <div class="row col-md-12">
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.quartier, 'Quartier') }}
+                {{ form_widget(registrationForm.quartier, {'attr': {'class': 'quartier form-control', 'placeholder': 'Quartier'}}) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.commune, 'Commune') }}
+                {{ form_widget(registrationForm.commune, {'attr': {'class': 'commune form-control', 'placeholder': 'Commune'}}) }}
+            </div>
+        </div>
+        <div class="row col-md-12">
+            
+        </div>
+        <div class="row col-md-12">
+            <div class="form-group col-md-6">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'password form-control', 'placeholder': 'Mot de passe'}}) }}
+            </div>
+        </div>
+
+        <div class="text-center"><button type="submit" class="btn btn-primary">S'inscrire</button></div>
+        {{ form_end(registrationForm) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

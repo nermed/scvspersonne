@@ -128,11 +128,17 @@ class Employee
      */
     private $imageFile;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=EmployeOccuped::class, mappedBy="employee")
+     */
+    private $employeOccupeds;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->createdBy = 1;
         $this->autreExperiences = new ArrayCollection();
+        $this->employeOccupeds = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -402,6 +408,33 @@ class Employee
     public function setDisponible(bool $disponible): self
     {
         $this->disponible = $disponible;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmployeOccuped[]
+     */
+    public function getEmployeOccupeds(): Collection
+    {
+        return $this->employeOccupeds;
+    }
+
+    public function addEmployeOccuped(EmployeOccuped $employeOccuped): self
+    {
+        if (!$this->employeOccupeds->contains($employeOccuped)) {
+            $this->employeOccupeds[] = $employeOccuped;
+            $employeOccuped->addEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployeOccuped(EmployeOccuped $employeOccuped): self
+    {
+        if ($this->employeOccupeds->removeElement($employeOccuped)) {
+            $employeOccuped->removeEmployee($this);
+        }
 
         return $this;
     }
